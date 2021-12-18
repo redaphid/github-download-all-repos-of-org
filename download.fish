@@ -1,7 +1,23 @@
 #!/usr/bin/env fish
 
-#ex: 
+#ex:
 # ORG_NAME=octoblu ./download.fish
 
 set ORG_ID (curl -H Authorization: $GITHUB_TOKEN  https://api.github.com/orgs/$ORG_NAME | jq .id)
 echo $ORG_ID
+
+set query """
+    query($endCursor: String) {
+      viewer {
+        repositories(first: 100, after: $endCursor) {
+          nodes { organizationId: $ORG_ID }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+"""
+
+echo $query
