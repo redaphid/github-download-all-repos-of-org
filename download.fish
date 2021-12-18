@@ -3,14 +3,14 @@
 #ex:
 # ORG_NAME=octoblu ./download.fish
 
-set ORG_ID (curl -H Authorization: $GITHUB_TOKEN  https://api.github.com/orgs/$ORG_NAME | jq .id)
-echo $ORG_ID
+set org_id (curl -H Authorization: $GITHUB_TOKEN  https://api.github.com/orgs/$ORG_NAME | jq .id)
+echo $org_id
 
 set query """
     query($endCursor: String) {
       viewer {
         repositories(first: 100, after: $endCursor) {
-          nodes { organizationId: $ORG_ID }
+          nodes { organizationId $org_id }
           pageInfo {
             hasNextPage
             endCursor
@@ -21,3 +21,5 @@ set query """
 """
 
 echo $query
+
+gh api graphql --paginate -f query=$query | jq .
