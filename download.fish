@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-echo (gh repo list octoblu --limit 9999 --json name,url) >> repos.json
+echo (gh repo list octoblu --limit 9999 --json name,url) | jq
