@@ -5,7 +5,7 @@
 #	- jq (https://stedolan.github.io/jq/)
 
 set -q ORG[1]; or begin
-	echo "I need the org name! ex ORG=octoblu ./download.fish" >&2
+	echo "I need the org name! I use the environment variable $ORG. example: ORG=octoblu ./download.fish" >&2
 	exit 1
 end
 
